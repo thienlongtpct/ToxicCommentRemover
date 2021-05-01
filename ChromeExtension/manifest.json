@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+    "name": "Toxic comment remover",
+    "version": "1.0",
+    "permissions": ["https://*/*"],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.youtube.com/watch?v=*"
+            ],
+            "js":["content.js"]
+        }
+    ],
+    "browser_action":{
+        "default_icon": "logo.png"
+    }
+}
