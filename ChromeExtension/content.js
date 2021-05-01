@@ -24,24 +24,46 @@ const startApp = () => {
                 }
             })
             .then(result => {
-                console.log(result);
                 tagsWithUncheckedText.forEach((tag, index) => {
+                    const badge = document.createElement("div");
+                    badge.classList.add('toxic-badge');
+                    badge.style.display = "flex";
+                    badge.style.justifyContent = "center";
+                    badge.style.padding = "0.4rem 0.8rem";
+                    badge.style.borderRadius = "100px";
+                    badge.style.marginLeft = "1rem";
+                    badge.style.backgroundColor = "#16a085";
+                    badge.style.color = "#ffffff";
+                    badge.style.fontSize = "11px";
+                    badge.style.fontWeight = "normal";
+                    badge.innerText = 'Токсичность: '+Math.round(result.response[index]*10000)/100+'%';
+                    tag.querySelector("#header-author").appendChild(badge);
+
                     if (result.response[index] > 0.5) {
-                        tag.style.opacity = 0.3;
+                        tag.onmouseover = () => tag.style.opacity = '1';
+                        tag.onmouseout = () => tag.style.opacity = '0.3';
+                        tag.querySelector(".toxic-badge").style.backgroundColor = "#f39c12";
+                        tag.querySelector(".toxic-badge").style.color = "#000000";
+
                         if (result.response[index] > 0.75) {
-                            const originalText =  tag.querySelector("#content-text").innerHTML.toString();
+                            const originalText =  tag.querySelector("#content-text").innerHTML;
                             const open = document.createElement("span");
                             open.href = "#";
                             open.innerText = "здесь";
                             open.style.textDecoration = "underline";
                             open.style.color = "#4d87c7";
                             open.onclick = () => tag.querySelector("#content-text").innerHTML = originalText;
+
                             tag.querySelector("#content-text").innerHTML = '';
                             tag.querySelector("#content-text")
                                 .appendChild(document.createTextNode("Комментарий скрыт по причине большого токсичности, нажмите "));
                             tag.querySelector("#content-text").appendChild(open);
                             tag.querySelector("#content-text")
                                 .appendChild(document.createTextNode(" для его просмотра"));
+
+                            tag.querySelector(".toxic-badge").style.backgroundColor = "#c0392b";
+                            tag.querySelector(".toxic-badge").style.color = "#ffffff";
+                            tag.querySelector(".toxic-badge").style.opacity = "1";
                         }
                     }
                     tag.classList.add("checked");

@@ -1,6 +1,7 @@
 {
     "manifest_version": 2,
-    "name": "Toxic comment remover",
+    "name": "Toxic Comment Remover",
+    "description": "Extension to hide and remove toxic comments in Youtube",
     "version": "1.0",
     "permissions": ["https://*/*"],
     "content_scripts": [
@@ -8,10 +9,16 @@
             "matches": [
                 "https://www.youtube.com/watch?v=*"
             ],
-            "js":["content.js"]
+            "js": ["content.js", "popup.html"]
         }
     ],
+    "options_page": "options.html",
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
+    },
     "browser_action":{
-        "default_icon": "logo.png"
+        "default_icon": "logo.png",
+        "default_popup": "popup.html"
     }
 }
